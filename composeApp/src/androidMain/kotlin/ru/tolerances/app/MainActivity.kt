@@ -3,21 +3,22 @@ package ru.tolerances.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import com.arkivanov.decompose.retainedComponent
+import ru.tolerances.app.components.IRootComponent
+import ru.tolerances.app.components.RootComponentImpl
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var rootComponent: IRootComponent
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        rootComponent = retainedComponent { componentContext ->
+            RootComponentImpl(componentContext)
+        }
 
         setContent {
-            RootApp()
+            RootApp(rootComponent)
         }
     }
-}
-
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    RootApp()
 }

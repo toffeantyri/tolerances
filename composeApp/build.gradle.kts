@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.buildConfig)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -68,6 +70,15 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+
+            implementation(libs.multiplatform.settings)
+            implementation(libs.decompose.decompose)
+            implementation(libs.decompose.extensionsComposeJetbrains)
+            implementation(libs.essenty.lifecycle)
+
+            implementation(libs.koin.core)
+
+//            implementation(libs.kotlinx)
         }
         val nonJsMain by getting {
             dependencies {
@@ -76,6 +87,7 @@ kotlin {
         }
 
         androidMain.dependencies {
+            implementation(libs.koin.android)
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
         }
@@ -89,6 +101,8 @@ kotlin {
         }
 
         jsMain.dependencies {
+            implementation(compose.html.core)
+            implementation(compose.runtime)
             implementation("com.jsoizo:kotlin-csv-js:1.10.0")
         }
     }
