@@ -1,4 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -42,15 +43,22 @@ kotlin {
         useEsModules()
     }
 
-    sourceSets {
-        val jvmMain by getting
-
-        androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
-
-            implementation("com.jsoizo:kotlin-csv-jvm:1.10.0")
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    applyDefaultHierarchyTemplate {
+        common {
+            withJs()
+            group("nonJs") {
+                withAndroidTarget()
+                withJvm()
+//                group("ios") {
+//                    withIos()
+//                }
+            }
         }
+    }
+
+    sourceSets {
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -60,8 +68,16 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+        }
+        val nonJsMain by getting {
+            dependencies {
+                implementation("com.jsoizo:kotlin-csv-jvm:1.10.0")
+            }
+        }
 
-
+        androidMain.dependencies {
+            implementation(compose.preview)
+            implementation(libs.androidx.activity.compose)
         }
 
 
@@ -69,7 +85,7 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
 
-            implementation("com.jsoizo:kotlin-csv-jvm:1.10.0")
+
         }
 
         jsMain.dependencies {

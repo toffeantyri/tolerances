@@ -8,13 +8,9 @@ import tolerancestabledata.composeapp.generated.resources.Res
 class CsvReader : ICsvReader {
 
     @OptIn(ExperimentalResourceApi::class)
-    override suspend fun read() {
-        val csvStrung = Res.readBytes("files/pole_dop_utf_8.csv").decodeToString()
-        println("LOG $csvStrung")
-        csvReader {
-
-        }
-
+    override suspend fun read(): List<List<String>> {
+        val csvString = Res.readBytes("files/pole_dop_utf_8.csv").decodeToString()
+        return csvReader().readAll(csvString)
     }
 
 }
