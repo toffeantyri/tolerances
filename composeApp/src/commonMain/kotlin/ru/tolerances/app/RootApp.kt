@@ -10,7 +10,7 @@ fun RootApp(component: IRootComponent) {
     LaunchedEffect(Unit) {
         val tolerancesTable = component.csvReader.read()
         tolerancesTable.forEach {
-            println(it)
+            println("LOG $it")
         }
     }
 

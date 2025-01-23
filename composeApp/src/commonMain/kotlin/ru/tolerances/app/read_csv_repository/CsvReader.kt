@@ -15,6 +15,7 @@ class CsvReader : ICsvReader {
     @OptIn(ExperimentalResourceApi::class)
     override suspend fun read(): List<List<String>> {
         val csvString = Res.readBytes("files/pole_dop_utf_8.csv").decodeToString()
+        println(csvString)
 
         val strokeList = csvString.lines()
 
