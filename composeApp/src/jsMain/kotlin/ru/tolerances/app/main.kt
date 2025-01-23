@@ -7,9 +7,12 @@ import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.arkivanov.essenty.statekeeper.StateKeeperDispatcher
 import org.jetbrains.skiko.wasm.onWasmReady
 import ru.tolerances.app.components.RootComponentImpl
+import ru.tolerances.app.di.initKoin
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
+
+    initKoin()
 
     val lifecycle = LifecycleRegistry()
     val stateKeeper = StateKeeperDispatcher()

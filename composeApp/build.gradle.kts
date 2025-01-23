@@ -82,7 +82,7 @@ kotlin {
         }
         val nonJsMain by getting {
             dependencies {
-                implementation("com.jsoizo:kotlin-csv-jvm:1.10.0")
+
             }
         }
 
@@ -103,7 +103,6 @@ kotlin {
         jsMain.dependencies {
             implementation(compose.html.core)
             implementation(compose.runtime)
-            implementation("com.jsoizo:kotlin-csv-js:1.10.0")
         }
     }
 }
