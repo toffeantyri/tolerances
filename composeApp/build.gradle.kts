@@ -71,6 +71,8 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
+            implementation(libs.kotlinx.coroutines.core)
+
             implementation(libs.multiplatform.settings)
             implementation(libs.decompose.decompose)
             implementation(libs.decompose.extensionsComposeJetbrains)
@@ -87,6 +89,7 @@ kotlin {
         }
 
         androidMain.dependencies {
+            implementation(libs.kotlinx.coroutines.android)
             implementation(libs.koin.android)
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -101,6 +104,7 @@ kotlin {
         }
 
         jsMain.dependencies {
+            implementation(libs.kotlinx.coroutines.js)
             implementation(compose.html.core)
             implementation(compose.runtime)
         }

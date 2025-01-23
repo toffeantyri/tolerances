@@ -17,7 +17,6 @@ fun main() {
     val lifecycle = LifecycleRegistry()
     val stateKeeper = StateKeeperDispatcher()
 
-
     val rootComponent = RootComponentImpl(
         componentContext =
         DefaultComponentContext(
