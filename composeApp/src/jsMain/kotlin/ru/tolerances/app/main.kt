@@ -29,7 +29,7 @@ fun main() {
 
     onWasmReady {
         CanvasBasedWindow(canvasElementId = "canvasBody") {
-            RootApp(rootComponent)
+            RootApp(component = rootComponent)
         }
     }
 
