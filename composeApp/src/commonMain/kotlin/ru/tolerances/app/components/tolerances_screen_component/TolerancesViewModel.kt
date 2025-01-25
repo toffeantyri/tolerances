@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ru.tolerances.app.read_csv_repository.ICsvReader
 import ru.tolerances.app.utils.EMPTY
+import ru.tolerances.app.utils.firstIndexOrNull
 
 class TolerancesViewModel(
     private val viewModelScope: CoroutineScope,
@@ -34,13 +35,14 @@ class TolerancesViewModel(
 
 
     fun onUserInputValue(value: String) {
-        fun clearSearchResult() = run { uiModel.value.searchRangeResult.clear() }
+        fun clearSearchResult() = run { uiModel.value.searchRangeResultIndex.value = null }
         viewModelScope.launch {
             clearSearchResult()
             uiModel.value.userValueField.value = value
             value.toDoubleOrNull()?.let { num ->
-                csvReader.intRanges.value.firstOrNull { num in it }?.let { searchResult ->
-                    uiModel.value.searchRangeResult.add((searchResult.start.toInt()..searchResult.endInclusive.toInt()).toString())
+
+                csvReader.intRanges.value.firstIndexOrNull { num in it }?.let { rangeIndex ->
+                    uiModel.value.searchRangeResultIndex.value = rangeIndex
                 } ?: clearSearchResult()
             }
 
@@ -52,7 +54,7 @@ class TolerancesViewModel(
     data class Model(
         val userValueField: MutableState<String> = mutableStateOf(EMPTY),
         val tolerancesField: MutableState<String> = mutableStateOf(EMPTY),
-        val searchRangeResult: SnapshotStateList<String> = mutableStateListOf(),
+        val searchRangeResultIndex: MutableState<Int?> = mutableStateOf(null),
         val searchToleranceResult: SnapshotStateList<String> = mutableStateListOf()
     )
 

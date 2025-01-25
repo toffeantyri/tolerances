@@ -1,5 +1,6 @@
 package ru.tolerances.app.ui.tolerances_screen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,8 @@ import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +38,13 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
     val tolerancesTable = component.viewModel.csvReader.tolerancesTable.collectAsState()
 
     val uiModel = component.viewModel.uiModel.subscribeAsState()
+    val searchedRange = remember {
+        derivedStateOf {
+            uiModel.value.searchRangeResultIndex.value?.let {
+                rangesList.value[it]
+            }
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -66,19 +76,17 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
                     label = { Text(text = "Размер") },
                 )
 
-                uiModel.value.searchRangeResult.forEach { range ->
+                AnimatedVisibility(searchedRange.value != null) {
                     Text(
                         modifier = Modifier.clickable {
-                            component.viewModel.onUserInputValue(range)
+                            component.viewModel.onUserInputValue(searchedRange.value.toString())
                         }.padding(top = 2.dp)
                             .border(width = 1.dp, shape = RectangleShape, color = Color.DarkGray)
                             .padding(16.dp),
-                        text = range,
+                        text = searchedRange.value?.toString() ?: "",
                         style = MaterialTheme.typography.displayMedium
                     )
                 }
-
-
             }
 
             Column(modifier = Modifier.fillMaxWidth(1f)) {
