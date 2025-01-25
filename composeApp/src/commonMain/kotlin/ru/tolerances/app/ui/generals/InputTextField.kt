@@ -68,7 +68,7 @@ fun InputTextField(
         label = label,
         leadingIcon = leadingIcon,
         colors = colors,
-        shape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
+        shape = RoundedCornerShape(8.dp),
         modifier = modifier,
         enabled = enabled,
         readOnly = readOnly,
