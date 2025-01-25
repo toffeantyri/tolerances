@@ -20,27 +20,29 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimator
 import com.arkivanov.essenty.backhandler.BackHandler
 import ru.tolerances.app.components.IRootComponent
+import ru.tolerances.app.ui.theme.AppTheme
 import ru.tolerances.app.ui.tolerances_screen.TolerancesScreenView
 
 @Composable
 fun RootApp(modifier: Modifier = Modifier, component: IRootComponent) {
 
-    Children(
-        stack = component.childStackBottom,
-        modifier = modifier
-            .statusBarsPadding()
-            .navigationBarsPadding(),
-        animation = backAnimation(
-            backHandler = component.backHandler,
-            onBack = component::onExitClicked
-        )
-    ) {
-        when (val item = it.instance) {
-            is IRootComponent.Child.OnTolerancesScreenChild -> TolerancesScreenView(item.component)
+    AppTheme {
+        Children(
+            stack = component.childStackBottom,
+            modifier = modifier
+                .statusBarsPadding()
+                .navigationBarsPadding(),
+            animation = backAnimation(
+                backHandler = component.backHandler,
+                onBack = component::onExitClicked
+            )
+        ) {
+            when (val item = it.instance) {
+                is IRootComponent.Child.OnTolerancesScreenChild -> TolerancesScreenView(item.component)
+            }
         }
     }
 }
-
 
 @OptIn(ExperimentalDecomposeApi::class)
 fun <C : Any, T : Any> backAnimation(
