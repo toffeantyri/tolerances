@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface ICsvReader {
 
-    val intRanges: StateFlow<List<IntRange>>
+    val intRanges: StateFlow<List<ClosedFloatingPointRange<Double>>>
 
     val tolerancesISOList: StateFlow<List<String>>
 

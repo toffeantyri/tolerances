@@ -11,13 +11,14 @@ class CsvReaderImpl : ICsvReader {
         const val NULL = "-"
     }
 
-    private val _intRanges: MutableStateFlow<List<IntRange>> = MutableStateFlow(emptyList())
+    private val _intRanges: MutableStateFlow<List<ClosedFloatingPointRange<Double>>> =
+        MutableStateFlow(emptyList())
     private val _tolerancesISOList: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
     private val _tolerancesGOSTList: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
     private val _tolerancesTable: MutableStateFlow<List<List<String>>> =
         MutableStateFlow(emptyList())
 
-    override val intRanges: StateFlow<List<IntRange>> get() = _intRanges
+    override val intRanges: StateFlow<List<ClosedFloatingPointRange<Double>>> get() = _intRanges
     override val tolerancesISOList: StateFlow<List<String>> get() = _tolerancesISOList
     override val tolerancesGOSTList: StateFlow<List<String>> get() = _tolerancesGOSTList
     override val tolerancesTable: StateFlow<List<List<String>>> get() = _tolerancesTable
@@ -34,13 +35,14 @@ class CsvReaderImpl : ICsvReader {
 
 
     private fun List<String>.initRangeListAndDropFirstStroke(): List<List<String>> {
-        val rangeList: MutableList<IntRange> = mutableListOf()
+        val rangeList: MutableList<ClosedFloatingPointRange<Double>> = mutableListOf()
         val resultList = this.mapIndexed { _, line ->
             val lineList = line.split(";")
             val first = lineList.first()
             if (first.contains(NULL).not()) {
+                val asd = 1.0..2.0
                 first.split("..").let {
-                    rangeList.add(it[0].toInt()..it[1].toInt())
+                    rangeList.add(it[0].toDouble()..it[1].toDouble())
                 }
             }
             lineList.drop(1)

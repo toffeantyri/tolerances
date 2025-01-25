@@ -11,7 +11,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ru.tolerances.app.read_csv_repository.ICsvReader
 import ru.tolerances.app.utils.EMPTY
-import kotlin.math.roundToInt
 
 class TolerancesViewModel(
     private val viewModelScope: CoroutineScope,
@@ -39,9 +38,9 @@ class TolerancesViewModel(
         viewModelScope.launch {
             clearSearchResult()
             uiModel.value.userValueField.value = value
-            value.toDoubleOrNull()?.roundToInt().let { int ->
-                csvReader.intRanges.value.firstOrNull { int in it }?.let { searchResult ->
-                    uiModel.value.searchRangeResult.add(searchResult.toString())
+            value.toDoubleOrNull()?.let { num ->
+                csvReader.intRanges.value.firstOrNull { num in it }?.let { searchResult ->
+                    uiModel.value.searchRangeResult.add((searchResult.start.toInt()..searchResult.endInclusive.toInt()).toString())
                 } ?: clearSearchResult()
             }
 
