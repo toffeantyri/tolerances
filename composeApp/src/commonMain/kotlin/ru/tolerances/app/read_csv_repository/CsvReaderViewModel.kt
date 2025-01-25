@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.StateFlow
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import tolerancestabledata.composeapp.generated.resources.Res
 
-class CsvReader : ICsvReader {
+class CsvReaderViewModel : ICsvReaderViewModel {
 
     companion object {
         const val NULL = "-"
