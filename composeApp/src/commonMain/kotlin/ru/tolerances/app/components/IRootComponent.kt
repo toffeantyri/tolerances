@@ -1,9 +1,22 @@
 package ru.tolerances.app.components
 
-import ru.tolerances.app.read_csv_repository.ICsvReader
+import com.arkivanov.decompose.router.stack.ChildStack
+import com.arkivanov.decompose.value.Value
+import com.arkivanov.essenty.backhandler.BackHandler
+import ru.tolerances.app.components.tolerances_screen_component.ITolerancesScreenComponent
 
 interface IRootComponent {
 
-    val csvReader: ICsvReader
+    val backHandler: BackHandler
+
+    val childStackBottom: Value<ChildStack<*, Child>>
+
+    fun onExitClicked()
+
+    sealed class Child {
+        data class OnTolerancesScreenChild(val component: ITolerancesScreenComponent) : Child()
+
+    }
+
 
 }

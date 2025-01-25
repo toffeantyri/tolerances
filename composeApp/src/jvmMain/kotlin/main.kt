@@ -30,7 +30,7 @@ fun main() {
             onCloseRequest = ::exitApplication,
             title = "TolerancesTableData",
         ) {
-            RootApp(rootComponent)
+            RootApp(component = rootComponent)
         }
     }
 }
