@@ -19,8 +19,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.sarawan.delivery.ui.generals.text_fields.AutoResizeText
 import ru.tolerances.app.ui.theme.ButtonGray
+import ru.tolerances.app.ui.theme.MintGreen
 import ru.tolerances.app.ui.theme.White
-import ru.tolerances.app.ui.theme.mintGreen
 
 
 @Composable
@@ -33,7 +33,7 @@ fun SaraFilledButton(
         defaultElevation = 2.dp
     ),
     colors: androidx.compose.material3.ButtonColors = androidx.compose.material3.ButtonDefaults.buttonColors(
-        containerColor = mintGreen,
+        containerColor = MintGreen,
         disabledContainerColor = ButtonGray
     ),
     isLoadingState: Boolean = false,
@@ -45,7 +45,7 @@ fun SaraFilledButton(
                 .fillMaxWidth(),
             text = text,
             color = if (isLoadingState) {
-                mintGreen
+                MintGreen
             } else {
                 White
             },

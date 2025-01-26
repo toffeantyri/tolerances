@@ -27,9 +27,25 @@ class TolerancesViewModel(
     }
 
     fun onToleranceInputValue(value: String) {
+        fun clearSearchResult() = run { uiModel.value.searchToleranceResultIndex.clear() }
         viewModelScope.launch {
+            clearSearchResult()
             uiModel.value.tolerancesField.value = value
+            val findedIndex = mutableListOf<Int>()
+            csvReader.tolerancesISOList.value.filterIndexed { index, s ->
+                val result = s.contains(value)
+                if (result) findedIndex.add(index)
+                result
+            }
 
+            if (findedIndex.isEmpty()) {
+                csvReader.tolerancesGOSTList.value.filterIndexed { index, s ->
+                    val result = s.contains(value)
+                    if (result) findedIndex.add(index)
+                    result
+                }
+            }
+            uiModel.value.searchToleranceResultIndex.addAll(findedIndex)
         }
     }
 
@@ -55,7 +71,7 @@ class TolerancesViewModel(
         val userValueField: MutableState<String> = mutableStateOf(EMPTY),
         val tolerancesField: MutableState<String> = mutableStateOf(EMPTY),
         val searchRangeResultIndex: MutableState<Int?> = mutableStateOf(null),
-        val searchToleranceResult: SnapshotStateList<String> = mutableStateListOf()
+        val searchToleranceResultIndex: SnapshotStateList<Int> = mutableStateListOf()
     )
 
 

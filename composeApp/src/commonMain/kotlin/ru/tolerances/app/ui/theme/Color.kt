@@ -34,11 +34,11 @@ val MoonLightGray = Color(192, 192, 192, 255)
 val SunLightGray = Color(175, 183, 189, 255)
 
 //profile item color
-val mintGreen = Color(0xFFEDFFDE)
-val forestGreen = Color(0xFF66AC2B)
+val MintGreen = Color(0xFFEDFFDE)
+val ForestGreen = Color(0xFF66AC2B)
 
-val liquidBlue = Color(0xFFCEE8FF)
-val oceanBlue = Color(0xFF4AAAFF)
+val LiquidBlue = Color(0xFFCEE8FF)
+val OceanBlue = Color(0xFF4AAAFF)
 
 val nudePink = Color(0xFFFFE5E1)
 val strawberryPink = Color(0xFFFB8C7A)

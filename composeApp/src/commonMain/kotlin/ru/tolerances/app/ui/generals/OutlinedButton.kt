@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.sarawan.delivery.ui.generals.text_fields.AutoResizeText
-import ru.tolerances.app.ui.theme.mintGreen
+import ru.tolerances.app.ui.theme.MintGreen
 
 
 @Composable
@@ -25,7 +25,7 @@ fun SaraOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     shape: Shape = RoundedCornerShape(30.dp),
-    border: BorderStroke = BorderStroke(1.dp, color = mintGreen),
+    border: BorderStroke = BorderStroke(1.dp, color = MintGreen),
     elevation: ButtonElevation? = null,
     colors: ButtonColors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
     textColor: Color = MaterialTheme.colorScheme.onSurface,
