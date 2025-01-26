@@ -84,9 +84,8 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
 
                     AnimatedVisibility(searchedRange.value != null) {
                         Text(
-                            modifier = Modifier.fillMaxWidth().padding(end = 8.dp).clickable {
-                                component.viewModel.onUserInputValue(searchedRange.value.toString())
-                            }.padding(top = 0.dp)
+                            modifier = Modifier.fillMaxWidth().padding(end = 8.dp)
+                                .padding(top = 0.dp)
                                 .border(width = 1.dp, shape = RectangleShape, color = OceanBlue)
                                 .padding(16.dp),
                             text = searchedRange.value?.toString() ?: "",
