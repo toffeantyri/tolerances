@@ -31,6 +31,7 @@ class TolerancesViewModel(
         viewModelScope.launch {
             clearSearchResult()
             uiModel.value.tolerancesField.value = value
+            if (value.isEmpty()) return@launch
             val findedIndex = mutableListOf<Int>()
             csvReader.tolerancesISOList.value.filterIndexed { index, s ->
                 val result = s.contains(value)
@@ -45,7 +46,12 @@ class TolerancesViewModel(
                     result
                 }
             }
-            uiModel.value.searchToleranceResultIndex.addAll(findedIndex)
+            if (findedIndex.isNotEmpty()) {
+                uiModel.value.searchToleranceResultIndex.addAll(findedIndex)
+            } else {
+                clearSearchResult()
+            }
+
         }
     }
 
