@@ -4,10 +4,13 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
@@ -27,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import ru.tolerances.app.components.tolerances_screen_component.ITolerancesScreenComponent
 import ru.tolerances.app.ui.generals.InputTextField
+import ru.tolerances.app.ui.generals.MyFilledButton
 import ru.tolerances.app.ui.generals.TitleText
 import ru.tolerances.app.ui.theme.OceanBlue
 import ru.tolerances.app.ui.theme.medium16TextStyle
@@ -50,113 +54,134 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
         }
     }
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-        item {
-            TitleText(
-                modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
-                text = "Таблица допусков и посадок",
-                textAlign = TextAlign.Center,
-                textStyle = medium16TextStyle()
+    val dialogSlot = component.dialog.subscribeAsState()
+
+    dialogSlot.value.child?.let { child ->
+        when (val item = child.instance) {
+            is ITolerancesScreenComponent.DialogChild.ToleranceResult -> ToleranceResultDialogView(
+                item.component
             )
         }
+    }
+    Box(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
+            item {
+                TitleText(
+                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                    text = "Таблица допусков и посадок",
+                    textAlign = TextAlign.Center,
+                    textStyle = medium16TextStyle()
+                )
+            }
 
-        item {
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).padding(top = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(0.5f),
-                    horizontalAlignment = Alignment.CenterHorizontally
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+                        .padding(top = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    InputTextField(
-                        modifier = Modifier.fillMaxWidth().padding(end = 8.dp),
-                        valueState = uiModel.value.userValueField,
-                        onValueChange = { component.viewModel.onUserInputValue(it) },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = ImeAction.Next
-                        ),
-                        label = { Text(text = "Размер") },
-                    )
-
-                    AnimatedVisibility(searchedRange.value != null) {
-                        Text(
-                            modifier = Modifier.fillMaxWidth().padding(end = 8.dp)
-                                .padding(top = 0.dp)
-                                .border(width = 1.dp, shape = RectangleShape, color = OceanBlue)
-                                .padding(16.dp),
-                            text = searchedRange.value?.toString() ?: "",
-                            style = MaterialTheme.typography.displayMedium
+                    Column(
+                        modifier = Modifier.fillMaxWidth(0.5f),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        InputTextField(
+                            modifier = Modifier.fillMaxWidth().padding(end = 8.dp),
+                            valueState = uiModel.value.userValueField,
+                            onValueChange = { component.viewModel.onUserInputValue(it) },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Next
+                            ),
+                            label = { Text(text = "Размер") },
                         )
+
+                        AnimatedVisibility(searchedRange.value != null) {
+                            Text(
+                                modifier = Modifier.fillMaxWidth().padding(end = 8.dp)
+                                    .padding(top = 0.dp)
+                                    .border(width = 1.dp, shape = RectangleShape, color = OceanBlue)
+                                    .padding(16.dp),
+                                text = searchedRange.value?.toString() ?: "",
+                                style = MaterialTheme.typography.displayMedium
+                            )
+                        }
                     }
-                }
 
-                Column(modifier = Modifier.fillMaxWidth(1f)) {
-                    InputTextField(
-                        modifier = Modifier.fillMaxWidth().padding(start = 8.dp),
-                        valueState = uiModel.value.tolerancesField,
-                        onValueChange = { component.viewModel.onToleranceInputValue(it) },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Done
-                        ),
-                        label = { Text(text = "Допуск") },
-                    )
-                    AnimatedVisibility(uiModel.value.searchToleranceResultIndex.isNotEmpty()) {
+                    Column(modifier = Modifier.fillMaxWidth(1f)) {
+                        InputTextField(
+                            modifier = Modifier.fillMaxWidth().padding(start = 8.dp),
+                            valueState = uiModel.value.tolerancesField,
+                            onValueChange = { component.viewModel.onToleranceInputValue(it) },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Text,
+                                imeAction = ImeAction.Done
+                            ),
+                            label = { Text(text = "Допуск") },
+                        )
+                        AnimatedVisibility(uiModel.value.searchToleranceResultIndex.isNotEmpty()) {
 
-                        Column(modifier = Modifier.fillMaxWidth()) {
-                            uiModel.value.searchToleranceResultIndex.forEach { toleranceIndex ->
+                            Column(modifier = Modifier.fillMaxWidth()) {
+                                uiModel.value.searchToleranceResultIndex.forEach { toleranceIndex ->
 
-                                Row(
-                                    modifier = Modifier.padding(start = 8.dp).fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Text(
-                                        modifier = Modifier.fillMaxWidth(0.5f).clickable {
-                                            val request = tolerancesISOList.value[toleranceIndex]
-                                            component.viewModel.onToleranceInputValue(request)
-                                        }.padding(top = 0.dp)
-                                            .border(
-                                                width = 1.dp,
-                                                shape = RectangleShape,
-                                                color = OceanBlue
-                                            )
-                                            .padding(16.dp),
-                                        text = tolerancesISOList.value[toleranceIndex],
-                                        style = MaterialTheme.typography.displayMedium
-                                    )
+                                    Row(
+                                        modifier = Modifier.padding(start = 8.dp).fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween
+                                    ) {
+                                        Text(
+                                            modifier = Modifier.fillMaxWidth(0.5f).clickable {
+                                                val request =
+                                                    tolerancesISOList.value[toleranceIndex]
+                                                component.viewModel.onToleranceInputValue(request)
+                                            }.padding(top = 0.dp)
+                                                .border(
+                                                    width = 1.dp,
+                                                    shape = RectangleShape,
+                                                    color = OceanBlue
+                                                )
+                                                .padding(16.dp),
+                                            text = tolerancesISOList.value[toleranceIndex],
+                                            style = MaterialTheme.typography.displayMedium
+                                        )
 
 
-                                    Text(
-                                        modifier = Modifier.fillMaxWidth(1f).clickable {
-                                            val request = tolerancesGOSTList.value[toleranceIndex]
-                                            component.viewModel.onToleranceInputValue(request)
-                                        }.padding(top = 0.dp)
-                                            .border(
-                                                width = 1.dp,
-                                                shape = RectangleShape,
-                                                color = OceanBlue
-                                            )
-                                            .padding(16.dp),
-                                        text = tolerancesGOSTList.value[toleranceIndex],
-                                        style = MaterialTheme.typography.displayMedium
-                                    )
+                                        Text(
+                                            modifier = Modifier.fillMaxWidth(1f).clickable {
+                                                val request =
+                                                    tolerancesGOSTList.value[toleranceIndex]
+                                                component.viewModel.onToleranceInputValue(request)
+                                            }.padding(top = 0.dp)
+                                                .border(
+                                                    width = 1.dp,
+                                                    shape = RectangleShape,
+                                                    color = OceanBlue
+                                                )
+                                                .padding(16.dp),
+                                            text = tolerancesGOSTList.value[toleranceIndex],
+                                            style = MaterialTheme.typography.displayMedium
+                                        )
+                                    }
                                 }
                             }
+
+
                         }
-
-
                     }
+
+
                 }
-
-
             }
+            item { Spacer(modifier = Modifier.height(62.dp)) }
         }
 
+        MyFilledButton(
+            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()
+                .padding(horizontal = 16.dp).padding(8.dp),
+            text = "Показать",
+            onClick = component::showDialogToleranceResult
+        )
     }
 }
