@@ -29,6 +29,7 @@ import ru.tolerances.app.components.tolerances_screen_component.ITolerancesScree
 import ru.tolerances.app.ui.generals.InputTextField
 import ru.tolerances.app.ui.generals.TitleText
 import ru.tolerances.app.ui.theme.OceanBlue
+import ru.tolerances.app.ui.theme.medium16TextStyle
 import ru.tolerances.app.utils.toIntRange
 
 @Composable
@@ -58,7 +59,8 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
             TitleText(
                 modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
                 text = "Таблица допусков и посадок",
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                textStyle = medium16TextStyle()
             )
         }
 

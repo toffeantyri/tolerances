@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 internal fun bold18TitleTextStyle() = TextStyle(
     fontSize = 18.sp,
-    fontWeight = FontWeight.Normal,
+    fontWeight = FontWeight.Bold,
     lineHeight = 18.2.sp,
     letterSpacing = 0.42.sp
 )
@@ -39,7 +39,7 @@ internal fun bold14TextStyle() = TextStyle(
 @Composable
 internal fun medium18TextStyle() = TextStyle(
     fontSize = 18.sp,
-    fontWeight = FontWeight.Normal,
+    fontWeight = FontWeight.SemiBold,
     lineHeight = 18.2.sp,
     letterSpacing = 0.42.sp
 )
@@ -49,7 +49,7 @@ internal fun medium18TextStyle() = TextStyle(
 @Composable
 internal fun medium16TextStyle() = TextStyle(
     fontSize = 16.sp,
-    fontWeight = FontWeight.Normal,
+    fontWeight = FontWeight.SemiBold,
     lineHeight = 18.2.sp,
     letterSpacing = 0.42.sp
 )
@@ -86,7 +86,7 @@ internal fun regular14TextStyle() = TextStyle(
 @Composable
 internal fun medium14TextStyle() = TextStyle(
     fontSize = 14.sp,
-    fontWeight = FontWeight.Normal,
+    fontWeight = FontWeight.SemiBold,
     lineHeight = 18.2.sp,
     letterSpacing = 0.42.sp
 )

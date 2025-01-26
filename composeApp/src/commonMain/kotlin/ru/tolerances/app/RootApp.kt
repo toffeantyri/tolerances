@@ -2,13 +2,18 @@ package ru.tolerances.app
 
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.text.style.TextAlign
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.StackAnimation
@@ -20,27 +25,48 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimator
 import com.arkivanov.essenty.backhandler.BackHandler
 import ru.tolerances.app.components.IRootComponent
+import ru.tolerances.app.ui.generals.TitleText
 import ru.tolerances.app.ui.theme.AppTheme
+import ru.tolerances.app.ui.theme.LiquidBlue
+import ru.tolerances.app.ui.theme.bold18TitleTextStyle
 import ru.tolerances.app.ui.tolerances_screen.TolerancesScreenView
 
 @Composable
 fun RootApp(modifier: Modifier = Modifier, component: IRootComponent) {
 
     AppTheme {
-        Children(
-            stack = component.childStackBottom,
-            modifier = modifier
-                .statusBarsPadding()
-                .navigationBarsPadding(),
-            animation = backAnimation(
-                backHandler = component.backHandler,
-                onBack = component::onExitClicked
-            )
-        ) {
-            when (val item = it.instance) {
-                is IRootComponent.Child.OnTolerancesScreenChild -> TolerancesScreenView(item.component)
+
+        Scaffold(
+            topBar = {
+                TopAppBar(modifier = Modifier.fillMaxWidth(), backgroundColor = LiquidBlue) {
+                    TitleText(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = "Справочник",
+                        textStyle = bold18TitleTextStyle(),
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
+        ) { innerPadding ->
+            Children(
+                stack = component.childStackBottom,
+                modifier = modifier
+                    .padding(innerPadding)
+                    .statusBarsPadding()
+                    .navigationBarsPadding(),
+                animation = backAnimation(
+                    backHandler = component.backHandler,
+                    onBack = component::onExitClicked
+                )
+            ) {
+                when (val item = it.instance) {
+                    is IRootComponent.Child.OnTolerancesScreenChild -> TolerancesScreenView(item.component)
+                }
+            }
+
         }
+
+
     }
 }
 
