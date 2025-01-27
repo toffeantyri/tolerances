@@ -46,6 +46,12 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
 
     val uiModel = component.viewModel.uiModel.subscribeAsState()
 
+    val buttonEnabled = remember() {
+        derivedStateOf {
+            (uiModel.value.searchRangeResultIndex.value != null) && (uiModel.value.searchToleranceResultIndex.size == 1)
+        }
+    }
+
     val searchedRange = remember {
         derivedStateOf {
             uiModel.value.searchRangeResultIndex.value?.let {
@@ -181,7 +187,8 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
             modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()
                 .padding(horizontal = 16.dp).padding(8.dp),
             text = "Показать",
-            onClick = component::showDialogToleranceResult
+            onClick = component::showDialogToleranceResult,
+            enabled = buttonEnabled.value
         )
     }
 }
