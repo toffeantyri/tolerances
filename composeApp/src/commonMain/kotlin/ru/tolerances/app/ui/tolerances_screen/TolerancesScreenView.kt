@@ -187,7 +187,16 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
             modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()
                 .padding(horizontal = 16.dp).padding(8.dp),
             text = "Показать",
-            onClick = component::showDialogToleranceResult,
+            onClick = {
+                with(uiModel.value) {
+                    searchRangeResultIndex.value?.let { rangeIndex ->
+                        searchToleranceResultIndex.firstOrNull()?.let { toleranceIndex ->
+                            component.showDialogToleranceResult(rangeIndex, toleranceIndex)
+                        }
+
+                    }
+                }
+            },
             enabled = buttonEnabled.value
         )
     }

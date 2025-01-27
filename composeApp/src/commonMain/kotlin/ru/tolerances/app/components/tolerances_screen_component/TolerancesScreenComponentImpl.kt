@@ -33,9 +33,9 @@ class TolerancesScreenComponentImpl(componentContext: ComponentContext) :
         childFactory = ::createChildDialog,
     )
 
-    override fun showDialogToleranceResult() {
+    override fun showDialogToleranceResult(rangeIndex: Int, toleranceIndex: Int) {
         slotNavigation.navigate {
-            DialogConfig.ToleranceResultDialogConfig("") //todo
+            DialogConfig.ToleranceResultDialogConfig(rangeIndex, toleranceIndex)
         }
     }
 
@@ -49,6 +49,7 @@ class TolerancesScreenComponentImpl(componentContext: ComponentContext) :
             ITolerancesScreenComponent.DialogChild.ToleranceResult(
                 TolerancesResultDialogComponentImpl(
                     childComponentContext,
+                    result = viewModel.csvReader.tolerancesTable.value[config.rangeIndex][config.toleranceIndex],
                     onDismiss = { slotNavigation.navigate { null } })
             )
         }
@@ -58,7 +59,8 @@ class TolerancesScreenComponentImpl(componentContext: ComponentContext) :
     @Serializable
     private sealed class DialogConfig {
         @Serializable
-        data class ToleranceResultDialogConfig(val any: String) : DialogConfig()
+        data class ToleranceResultDialogConfig(val rangeIndex: Int, val toleranceIndex: Int) :
+            DialogConfig()
 
     }
 

@@ -11,7 +11,7 @@ interface ITolerancesScreenComponent {
 
     val dialog: Value<ChildSlot<*, ITolerancesScreenComponent.DialogChild>>
 
-    fun showDialogToleranceResult()
+    fun showDialogToleranceResult(rangeIndex: Int, toleranceIndex: Int)
 
     @Stable
     sealed interface DialogChild {
