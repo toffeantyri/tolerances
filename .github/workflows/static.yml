@@ -57,15 +57,9 @@ jobs:
       - name: "📤 Upload GitHub Pages artifact"
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./composeApp/build/dist/js/productionExecutable
+          path: ./docs
 
       # 7. Deploy to GitHub Pages
       - name: "🚀 Deploy to GitHub Pages"
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          # ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          #BRANCH: gh-pages  # Ветка, в которой размещены страницы
-          FOLDER: ./composeApp/build/dist/js/productionExecutable     # Папка с собранным проектом
-          #CLEAN: true      # Удалять предыдущие файлы перед деплоем
-          #SINGLE_COMMIT: true
