@@ -6,4 +6,4 @@ configuration: Gradle with option : " shared:jvmRun -DmainClass=MainKt
 
 ----------------js web----------------
 You can open the web application by running the `:compose:jsBrowserDevelopmentRun` Gradle task.
-for build artifact `composeApp:jsBrowserProductWebpack`
+for build artifact `:composeApp:jsBrowserDistribution`
