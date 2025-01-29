@@ -26,7 +26,6 @@ jobs:
     name: github-pages
     environment:
       name: production
-      url: https://github.com/tolerances.github.io
     runs-on: ubuntu-latest
 
     steps:
