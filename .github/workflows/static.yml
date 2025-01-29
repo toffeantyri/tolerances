@@ -51,7 +51,7 @@ jobs:
       - name: "Copy files to root folder"
         run: |
           mkdir -p ./
-          cp -a ./composeApp/build/dist/js/productionExecutable ./
+          cp -a ./composeApp/build/dist/js/productionExecutable/. ./
 
       # 5. Set up GitHub Pages
       - name: "📄 Configure GitHub Pages"
