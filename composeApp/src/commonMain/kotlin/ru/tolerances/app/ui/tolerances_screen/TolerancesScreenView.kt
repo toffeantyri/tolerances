@@ -33,6 +33,7 @@ import ru.tolerances.app.ui.generals.InputTextField
 import ru.tolerances.app.ui.generals.MyFilledButton
 import ru.tolerances.app.ui.generals.TitleText
 import ru.tolerances.app.ui.theme.OceanBlue
+import ru.tolerances.app.ui.theme.medium14TextStyle
 import ru.tolerances.app.ui.theme.medium16TextStyle
 import ru.tolerances.app.utils.toIntRange
 
@@ -106,14 +107,30 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
                         )
 
                         AnimatedVisibility(searchedRange.value != null) {
-                            Text(
-                                modifier = Modifier.fillMaxWidth().padding(end = 8.dp)
-                                    .padding(top = 0.dp)
-                                    .border(width = 1.dp, shape = RectangleShape, color = OceanBlue)
-                                    .padding(16.dp),
-                                text = searchedRange.value?.toString() ?: "",
-                                style = MaterialTheme.typography.displayMedium
-                            )
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    modifier = Modifier.padding(16.dp),
+                                    text = "Интервал",
+                                    style = medium14TextStyle()
+                                )
+
+                                Text(
+                                    modifier = Modifier.fillMaxWidth().padding(end = 8.dp)
+                                        .padding(top = 0.dp)
+                                        .border(
+                                            width = 1.dp,
+                                            shape = RectangleShape,
+                                            color = OceanBlue
+                                        )
+                                        .padding(16.dp),
+                                    textAlign = TextAlign.Center,
+                                    text = searchedRange.value?.toString() ?: "",
+                                    style = MaterialTheme.typography.displayMedium
+                                )
+                            }
                         }
                     }
 
@@ -130,7 +147,30 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
                         )
                         AnimatedVisibility(uiModel.value.searchToleranceResultIndex.isNotEmpty()) {
 
-                            Column(modifier = Modifier.fillMaxWidth()) {
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+
+                                Row(
+                                    modifier = Modifier.padding(start = 8.dp).fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+
+                                    Text(
+                                        modifier = Modifier.padding(16.dp),
+                                        text = "ISO",
+                                        style = medium14TextStyle()
+                                    )
+
+                                    Text(
+                                        modifier = Modifier.padding(16.dp),
+                                        text = "ГОСТ",
+                                        style = medium14TextStyle()
+                                    )
+
+                                }
+
                                 uiModel.value.searchToleranceResultIndex.forEach { toleranceIndex ->
 
                                     Row(
@@ -139,9 +179,14 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
                                     ) {
                                         Text(
                                             modifier = Modifier.fillMaxWidth(0.5f).clickable {
-                                                val request =
-                                                    tolerancesISOList.value[toleranceIndex]
-                                                component.viewModel.onToleranceInputValue(request)
+                                                with(uiModel.value) {
+                                                    searchRangeResultIndex.value?.let { rangeIndex ->
+                                                        component.showDialogToleranceResult(
+                                                            rangeIndex,
+                                                            toleranceIndex
+                                                        )
+                                                    }
+                                                }
                                             }.padding(top = 0.dp)
                                                 .border(
                                                     width = 1.dp,
@@ -149,6 +194,7 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
                                                     color = OceanBlue
                                                 )
                                                 .padding(16.dp),
+                                            textAlign = TextAlign.Start,
                                             text = tolerancesISOList.value[toleranceIndex],
                                             style = MaterialTheme.typography.displayMedium
                                         )
@@ -156,9 +202,14 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
 
                                         Text(
                                             modifier = Modifier.fillMaxWidth(1f).clickable {
-                                                val request =
-                                                    tolerancesGOSTList.value[toleranceIndex]
-                                                component.viewModel.onToleranceInputValue(request)
+                                                with(uiModel.value) {
+                                                    searchRangeResultIndex.value?.let { rangeIndex ->
+                                                        component.showDialogToleranceResult(
+                                                            rangeIndex,
+                                                            toleranceIndex
+                                                        )
+                                                    }
+                                                }
                                             }.padding(top = 0.dp)
                                                 .border(
                                                     width = 1.dp,
@@ -166,11 +217,13 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
                                                     color = OceanBlue
                                                 )
                                                 .padding(16.dp),
+                                            textAlign = TextAlign.End,
                                             text = tolerancesGOSTList.value[toleranceIndex],
                                             style = MaterialTheme.typography.displayMedium
                                         )
                                     }
                                 }
+
                             }
 
 
@@ -193,7 +246,6 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
                         searchToleranceResultIndex.firstOrNull()?.let { toleranceIndex ->
                             component.showDialogToleranceResult(rangeIndex, toleranceIndex)
                         }
-
                     }
                 }
             },
