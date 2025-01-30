@@ -35,6 +35,7 @@ import ru.tolerances.app.ui.generals.TitleText
 import ru.tolerances.app.ui.theme.OceanBlue
 import ru.tolerances.app.ui.theme.medium14TextStyle
 import ru.tolerances.app.ui.theme.medium16TextStyle
+import ru.tolerances.app.ui.theme.regular12TextStyle
 import ru.tolerances.app.utils.toIntRange
 
 @Composable
@@ -79,7 +80,7 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
             item {
                 TitleText(
                     modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
-                    text = "Таблица допусков и посадок",
+                    text = "Таблица допусков и посадок ЕСДП",
                     textAlign = TextAlign.Center,
                     textStyle = medium16TextStyle()
                 )
@@ -141,19 +142,19 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
                             onValueChange = { component.viewModel.onToleranceInputValue(it) },
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Text,
-                                imeAction = ImeAction.Done
+                                imeAction = ImeAction.None
                             ),
                             label = { Text(text = "Допуск") },
                         )
                         AnimatedVisibility(uiModel.value.searchToleranceResultIndex.isNotEmpty()) {
 
                             Column(
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier.fillMaxWidth().padding(start = 8.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
 
                                 Row(
-                                    modifier = Modifier.padding(start = 8.dp).fillMaxWidth(),
+                                    modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
 
@@ -165,7 +166,7 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
 
                                     Text(
                                         modifier = Modifier.padding(16.dp),
-                                        text = "ГОСТ",
+                                        text = "ОСТ*",
                                         style = medium14TextStyle()
                                     )
 
@@ -181,10 +182,12 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
                                             modifier = Modifier.fillMaxWidth(0.5f).clickable {
                                                 with(uiModel.value) {
                                                     searchRangeResultIndex.value?.let { rangeIndex ->
-                                                        component.showDialogToleranceResult(
-                                                            rangeIndex,
-                                                            toleranceIndex
-                                                        )
+                                                        if (tolerancesISOList.value[toleranceIndex] != "-") {
+                                                            component.showDialogToleranceResult(
+                                                                rangeIndex,
+                                                                toleranceIndex
+                                                            )
+                                                        }
                                                     }
                                                 }
                                             }.padding(top = 0.dp)
@@ -204,10 +207,12 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
                                             modifier = Modifier.fillMaxWidth(1f).clickable {
                                                 with(uiModel.value) {
                                                     searchRangeResultIndex.value?.let { rangeIndex ->
-                                                        component.showDialogToleranceResult(
-                                                            rangeIndex,
-                                                            toleranceIndex
-                                                        )
+                                                        if (tolerancesGOSTList.value[toleranceIndex] != "-") {
+                                                            component.showDialogToleranceResult(
+                                                                rangeIndex,
+                                                                toleranceIndex
+                                                            )
+                                                        }
                                                     }
                                                 }
                                             }.padding(top = 0.dp)
@@ -224,6 +229,11 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
                                     }
                                 }
 
+                                Text(
+                                    text = "*Предельные отклонения по ЕСДП и системе ОСТ совпадают не полностью",
+                                    textAlign = TextAlign.End,
+                                    style = regular12TextStyle()
+                                )
                             }
 
 

@@ -27,25 +27,30 @@ class TolerancesViewModel(
     }
 
     fun onToleranceInputValue(value: String) {
+        if (value.length > 4) return
         fun clearSearchResult() = run { uiModel.value.searchToleranceResultIndex.clear() }
         viewModelScope.launch {
             clearSearchResult()
             uiModel.value.tolerancesField.value = value
             if (value.isEmpty()) return@launch
-            val findedIndex = mutableListOf<Int>()
-            csvReader.tolerancesISOList.value.filterIndexed { index, s ->
-                val result = s.contains(value)
-                if (result) findedIndex.add(index)
-                result
+            val findedIndex = mutableSetOf<Int>()
+            val isoSearchJob = launch {
+                csvReader.tolerancesISOList.value.filterIndexed { index, s ->
+                    val result = s.contains(value)
+                    if (result) findedIndex.add(index)
+                    result
+                }
             }
-
-            if (findedIndex.isEmpty()) {
+            val gostSearchResult = launch {
                 csvReader.tolerancesGOSTList.value.filterIndexed { index, s ->
                     val result = s.contains(value)
                     if (result) findedIndex.add(index)
                     result
                 }
             }
+            isoSearchJob.join()
+            gostSearchResult.join()
+
             if (findedIndex.isNotEmpty()) {
                 uiModel.value.searchToleranceResultIndex.addAll(findedIndex)
             } else {
@@ -57,12 +62,12 @@ class TolerancesViewModel(
 
 
     fun onUserInputValue(value: String) {
+        if (value.length > 5) return
         fun clearSearchResult() = run { uiModel.value.searchRangeResultIndex.value = null }
         viewModelScope.launch {
             clearSearchResult()
             uiModel.value.userValueField.value = value
             value.toDoubleOrNull()?.let { num ->
-
                 csvReader.intRanges.value.firstIndexOrNull { num in it }?.let { rangeIndex ->
                     uiModel.value.searchRangeResultIndex.value = rangeIndex
                 } ?: clearSearchResult()
