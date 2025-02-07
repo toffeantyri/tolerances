@@ -25,6 +25,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimator
 import com.arkivanov.essenty.backhandler.BackHandler
 import ru.tolerances.app.components.IRootComponent
+import ru.tolerances.app.ui.cutting_speed_screen.CuttingSpeedScreenView
 import ru.tolerances.app.ui.generals.TitleText
 import ru.tolerances.app.ui.theme.AppTheme
 import ru.tolerances.app.ui.theme.LiquidBlue
@@ -61,6 +62,7 @@ fun RootApp(modifier: Modifier = Modifier, component: IRootComponent) {
             ) {
                 when (val item = it.instance) {
                     is IRootComponent.Child.OnTolerancesScreenChild -> TolerancesScreenView(item.component)
+                    is IRootComponent.Child.OnCuttingSpeedScreenChild -> CuttingSpeedScreenView(item.component)
                 }
             }
 
