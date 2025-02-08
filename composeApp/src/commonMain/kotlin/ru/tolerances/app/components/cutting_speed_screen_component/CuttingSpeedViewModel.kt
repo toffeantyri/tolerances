@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
+import ru.tolerances.app.domain.models.CuttingCalcType
 import ru.tolerances.app.utils.EMPTY
 
 class CuttingSpeedViewModel : InstanceKeeper.Instance {
@@ -16,9 +17,20 @@ class CuttingSpeedViewModel : InstanceKeeper.Instance {
         uiModel.value.diameterField.value = value
     }
 
+    fun onToggleCuttingSpeed(state: Boolean) {
+        println("TOOGLE NEW STATE $state")
+        with(uiModel.value) {
+            selectedCuttingCalcType.value =
+                if (state) CuttingCalcType.CalcV else CuttingCalcType.CalcN
+        }
+    }
+
 
     data class UiModel(
-        val diameterField: MutableState<String> = mutableStateOf(EMPTY)
-    )
+        val diameterField: MutableState<String> = mutableStateOf(EMPTY),
+        val selectedCuttingCalcType: MutableState<CuttingCalcType> = mutableStateOf(CuttingCalcType.CalcN),
+
+
+        )
 
 }
