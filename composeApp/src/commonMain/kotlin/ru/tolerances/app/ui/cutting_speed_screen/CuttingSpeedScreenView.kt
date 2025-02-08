@@ -18,7 +18,7 @@ import androidx.compose.material.Text
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.OutlinedIconToggleButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -42,7 +42,7 @@ fun CuttingSpeedScreenView(component: ICuttingSpeedScreenComponent) {
     val uiModel = component.viewModel.uiModel.subscribeAsState()
 
     val toggleSelectedCuttingTypeState = remember(uiModel.value.selectedCuttingCalcType.value) {
-        mutableStateOf(uiModel.value.selectedCuttingCalcType.value == CuttingCalcType.CalcV)
+        derivedStateOf { uiModel.value.selectedCuttingCalcType.value == CuttingCalcType.CalcV }
     }
 
     Surface {
@@ -83,8 +83,16 @@ fun CuttingSpeedScreenView(component: ICuttingSpeedScreenComponent) {
                         .padding(horizontal = 4.dp).pointerInput(Unit) {
                             detectHorizontalDragGestures { _, dragAmount ->
                                 when {
-                                    dragAmount > 0 -> component.viewModel.onToggleCuttingSpeed(true) // Свайп вправо
-                                    dragAmount < 0 -> component.viewModel.onToggleCuttingSpeed(false) // Свайп влево
+                                    dragAmount > 0 -> {
+                                        if (!toggleSelectedCuttingTypeState.value) {
+                                            component.viewModel.onToggleCuttingSpeed(true)
+                                        }
+                                    }// Свайп вправо
+                                    dragAmount < 0 -> {
+                                        if (toggleSelectedCuttingTypeState.value) {
+                                            component.viewModel.onToggleCuttingSpeed(false)
+                                        }
+                                    } // Свайп влево
                                 }
                             }
                         },
