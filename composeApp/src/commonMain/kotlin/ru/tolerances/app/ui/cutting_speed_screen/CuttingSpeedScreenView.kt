@@ -3,6 +3,7 @@ package ru.tolerances.app.ui.cutting_speed_screen
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -65,8 +67,6 @@ fun CuttingSpeedScreenView(component: ICuttingSpeedScreenComponent) {
                 label = { Text(text = "Диаметр") },
             )
 
-
-
             Row(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).padding(top = 8.dp)
                     .border(
@@ -80,7 +80,14 @@ fun CuttingSpeedScreenView(component: ICuttingSpeedScreenComponent) {
                 }
                 OutlinedIconToggleButton(
                     modifier = Modifier.fillMaxWidth(if (toggleSelectedCuttingTypeState.value) 1f else 0.5f)
-                        .padding(horizontal = 4.dp),
+                        .padding(horizontal = 4.dp).pointerInput(Unit) {
+                            detectHorizontalDragGestures { _, dragAmount ->
+                                when {
+                                    dragAmount > 0 -> component.viewModel.onToggleCuttingSpeed(true) // Свайп вправо
+                                    dragAmount < 0 -> component.viewModel.onToggleCuttingSpeed(false) // Свайп влево
+                                }
+                            }
+                        },
                     checked = toggleSelectedCuttingTypeState.value,
                     onCheckedChange = component.viewModel::onToggleCuttingSpeed,
                     colors = IconButtonDefaults.outlinedIconToggleButtonColors(
