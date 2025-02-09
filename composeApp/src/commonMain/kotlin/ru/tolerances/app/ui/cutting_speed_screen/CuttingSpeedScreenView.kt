@@ -3,11 +3,11 @@ package ru.tolerances.app.ui.cutting_speed_screen
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,6 +20,7 @@ import androidx.compose.material3.OutlinedIconToggleButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.input.ImeAction
@@ -72,11 +73,20 @@ fun CuttingSpeedScreenView(component: ICuttingSpeedScreenComponent) {
                     .border(
                         BorderStroke(1.dp, LightGray), RoundedCornerShape(22.dp)
                     ),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
 
                 AnimatedVisibility(toggleSelectedCuttingTypeState.value) {
-                    Spacer(modifier = Modifier.fillMaxWidth(0.5f))
+                    Text(
+                        modifier = Modifier.fillMaxWidth(0.5f)
+                            .clickable(interactionSource = null, indication = null) {
+                                component.viewModel.onToggleCuttingSpeed(false)
+                            },
+                        text = CuttingCalcType.CalcN.getTypeTitle(),
+                        maxLines = 1,
+                        textAlign = TextAlign.Center
+                    )
                 }
                 OutlinedIconToggleButton(
                     modifier = Modifier.fillMaxWidth(if (toggleSelectedCuttingTypeState.value) 1f else 0.5f)
@@ -111,7 +121,15 @@ fun CuttingSpeedScreenView(component: ICuttingSpeedScreenComponent) {
                 }
 
                 AnimatedVisibility(toggleSelectedCuttingTypeState.value.not()) {
-                    Spacer(modifier = Modifier.fillMaxWidth(1f))
+                    Text(
+                        modifier = Modifier.fillMaxWidth(1f)
+                            .clickable(interactionSource = null, indication = null) {
+                                component.viewModel.onToggleCuttingSpeed(true)
+                            },
+                        text = CuttingCalcType.CalcV.getTypeTitle(),
+                        maxLines = 1,
+                        textAlign = TextAlign.Center
+                    )
                 }
             }
 
