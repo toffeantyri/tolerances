@@ -14,7 +14,10 @@ class CuttingSpeedViewModel : InstanceKeeper.Instance {
     val uiModel: Value<UiModel> = MutableValue(UiModel())
 
     fun onDiameterChanged(value: String) {
-        uiModel.value.diameterField.value = value
+        with(uiModel.value) {
+            diameterField.value = value
+            diameterFieldError.validateAsFloat(value)
+        }
     }
 
     fun onToggleCuttingCalcType(state: Boolean) {
@@ -26,21 +29,40 @@ class CuttingSpeedViewModel : InstanceKeeper.Instance {
     }
 
     fun onInputV(value: String) {
-        uiModel.value.inputFieldV.value = value
+        with(uiModel.value) {
+            inputFieldV.value = value
+            inputFieldErrorV.validateAsFloat(value)
+        }
     }
 
     fun onInputN(value: String) {
-        uiModel.value.inputFieldN.value = value
+        with(uiModel.value) {
+            inputFieldN.value = value
+            inputFieldErrorN.validateAsFloat(value)
+        }
+    }
+
+    fun calculate() {
+
+
     }
 
     data class UiModel(
         val diameterField: MutableState<String> = mutableStateOf(EMPTY),
+        val diameterFieldError: MutableState<String?> = mutableStateOf(null),
         val selectedCuttingCalcType: MutableState<CuttingCalcType> = mutableStateOf(CuttingCalcType.CalcN),
         val inputFieldV: MutableState<String> = mutableStateOf(EMPTY),
         val inputFieldErrorV: MutableState<String?> = mutableStateOf(null),
         val inputFieldN: MutableState<String> = mutableStateOf(EMPTY),
         val inputFieldErrorN: MutableState<String?> = mutableStateOf(null)
+    )
 
-        )
+    fun MutableState<String?>.validateAsFloat(value: String) {
+        value.toFloatOrNull()?.let {
+            this.value = null
+        } ?: run {
+            this.value = "Введите число"
+        }
+    }
 
 }

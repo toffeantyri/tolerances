@@ -164,7 +164,7 @@ private fun MainBottomNavigation(
     selectedIndexState: State<Int>,
 ) {
 
-    Surface(elevation = 2.dp) {
+    Surface(elevation = 5.dp) {
         NavigationBar(
             containerColor = MaterialTheme.colorScheme.surface
         ) {
