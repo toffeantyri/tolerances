@@ -25,11 +25,21 @@ class CuttingSpeedViewModel : InstanceKeeper.Instance {
         }
     }
 
+    fun onInputV(value: String) {
+        uiModel.value.inputFieldV.value = value
+    }
+
+    fun onInputN(value: String) {
+        uiModel.value.inputFieldN.value = value
+    }
 
     data class UiModel(
         val diameterField: MutableState<String> = mutableStateOf(EMPTY),
         val selectedCuttingCalcType: MutableState<CuttingCalcType> = mutableStateOf(CuttingCalcType.CalcN),
-
+        val inputFieldV: MutableState<String> = mutableStateOf(EMPTY),
+        val inputFieldErrorV: MutableState<String?> = mutableStateOf(null),
+        val inputFieldN: MutableState<String> = mutableStateOf(EMPTY),
+        val inputFieldErrorN: MutableState<String?> = mutableStateOf(null)
 
         )
 

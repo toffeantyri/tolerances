@@ -8,8 +8,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -17,7 +15,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import ru.tolerances.app.components.cutting_speed_screen_component.ICuttingSpeedScreenComponent
-import ru.tolerances.app.domain.models.CuttingCalcType
 import ru.tolerances.app.ui.generals.InputTextField
 import ru.tolerances.app.ui.generals.TitleText
 import ru.tolerances.app.ui.theme.medium16TextStyle
@@ -26,10 +23,6 @@ import ru.tolerances.app.ui.theme.medium16TextStyle
 fun CuttingSpeedScreenView(component: ICuttingSpeedScreenComponent) {
 
     val uiModel = component.viewModel.uiModel.subscribeAsState()
-
-    val toggleSelectedCuttingTypeState = remember(uiModel.value.selectedCuttingCalcType.value) {
-        derivedStateOf { uiModel.value.selectedCuttingCalcType.value == CuttingCalcType.CalcV }
-    }
 
     Surface {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -50,13 +43,19 @@ fun CuttingSpeedScreenView(component: ICuttingSpeedScreenComponent) {
                     keyboardType = KeyboardType.Decimal,
                     imeAction = ImeAction.Next
                 ),
-                label = { Text(text = "Диаметр") },
+                label = { Text(text = "Введите диаметр") },
             )
 
             SwiperView(
-                toggleState = toggleSelectedCuttingTypeState,
                 selectedCuttingType = uiModel.value.selectedCuttingCalcType,
                 onToggleCuttingType = component.viewModel::onToggleCuttingCalcType
+            )
+
+            CuttingCalcRow(
+                selectedCuttingType = uiModel.value.selectedCuttingCalcType,
+                uiModel = uiModel,
+                onInputN = component.viewModel::onInputN,
+                onInputV = component.viewModel::onInputV
             )
 
         }

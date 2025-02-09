@@ -15,6 +15,8 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.OutlinedIconToggleButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -27,11 +29,13 @@ import ru.tolerances.app.ui.theme.MintGreen
 
 @Composable
 fun SwiperView(
-    toggleState: State<Boolean>,
     selectedCuttingType: State<CuttingCalcType>,
     onToggleCuttingType: (Boolean) -> Unit
 ) {
 
+    val toggleState = remember(selectedCuttingType.value) {
+        derivedStateOf { selectedCuttingType.value == CuttingCalcType.CalcV }
+    }
 
     Row(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).padding(top = 8.dp)
