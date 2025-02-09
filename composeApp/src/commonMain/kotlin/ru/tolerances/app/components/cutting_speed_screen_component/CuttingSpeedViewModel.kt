@@ -17,7 +17,7 @@ class CuttingSpeedViewModel : InstanceKeeper.Instance {
         uiModel.value.diameterField.value = value
     }
 
-    fun onToggleCuttingSpeed(state: Boolean) {
+    fun onToggleCuttingCalcType(state: Boolean) {
         println("TOOGLE NEW STATE $state")
         with(uiModel.value) {
             selectedCuttingCalcType.value =
