@@ -27,6 +27,15 @@ fun CuttingSpeedScreenView(component: ICuttingSpeedScreenComponent) {
 
     val uiModel = component.viewModel.uiModel.subscribeAsState()
 
+    val dialogSlot = component.dialog.subscribeAsState()
+
+    dialogSlot.value.child?.let { child ->
+        when (val item = child.instance) {
+            is ICuttingSpeedScreenComponent.DialogChild.CalculateResult -> CuttingResultDialogView(
+                item.component
+            )
+        }
+    }
 
     Surface {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -75,8 +84,8 @@ fun CuttingSpeedScreenView(component: ICuttingSpeedScreenComponent) {
                 modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()
                     .padding(horizontal = 16.dp).padding(8.dp),
                 text = "Рассчитать",
-                onClick = component.viewModel::calculate,
-                enabled = true
+                onClick = component::showCalcResultDialog,
+                enabled = uiModel.value.inputFieldN.value.isNotBlank() || uiModel.value.inputFieldV.value.isNotBlank()
             )
         }
     }

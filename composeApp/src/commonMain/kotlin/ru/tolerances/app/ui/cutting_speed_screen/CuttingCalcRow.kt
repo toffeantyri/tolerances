@@ -33,13 +33,13 @@ fun CuttingCalcRow(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AnimatedVisibility(selectedCuttingType.value == CuttingCalcType.CalcV) {
+        AnimatedVisibility(selectedCuttingType.value is CuttingCalcType.CalcV) {
             Spacer(modifier = Modifier.fillMaxWidth(0.5f))
         }
         InputTextField(
-            modifier = Modifier.fillMaxWidth(if (selectedCuttingType.value == CuttingCalcType.CalcV) 1f else 0.5f),
-            valueState = if (selectedCuttingType.value == CuttingCalcType.CalcV) uiModel.value.inputFieldV else uiModel.value.inputFieldN,
-            onValueChange = if (selectedCuttingType.value == CuttingCalcType.CalcV) onInputV else onInputN,
+            modifier = Modifier.fillMaxWidth(if (selectedCuttingType.value is CuttingCalcType.CalcV) 1f else 0.5f),
+            valueState = if (selectedCuttingType.value is CuttingCalcType.CalcV) uiModel.value.inputFieldV else uiModel.value.inputFieldN,
+            onValueChange = if (selectedCuttingType.value is CuttingCalcType.CalcV) onInputV else onInputN,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Number
@@ -50,10 +50,10 @@ fun CuttingCalcRow(
                     maxLines = 1
                 )
             },
-            error = if (selectedCuttingType.value == CuttingCalcType.CalcV) uiModel.value.inputFieldErrorV.value
+            error = if (selectedCuttingType.value is CuttingCalcType.CalcV) uiModel.value.inputFieldErrorV.value
             else uiModel.value.inputFieldErrorN.value
         )
-        AnimatedVisibility(selectedCuttingType.value == CuttingCalcType.CalcN) {
+        AnimatedVisibility(selectedCuttingType.value is CuttingCalcType.CalcN) {
             Spacer(modifier = Modifier.fillMaxWidth(1f))
         }
     }

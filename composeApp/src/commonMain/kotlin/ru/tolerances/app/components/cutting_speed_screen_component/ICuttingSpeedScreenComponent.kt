@@ -11,6 +11,8 @@ interface ICuttingSpeedScreenComponent {
 
     val dialog: Value<ChildSlot<*, ICuttingSpeedScreenComponent.DialogChild>>
 
+    fun showCalcResultDialog()
+
     @Stable
     sealed interface DialogChild {
         data class CalculateResult(val component: ICuttingTypeCalcResultComponent) : DialogChild

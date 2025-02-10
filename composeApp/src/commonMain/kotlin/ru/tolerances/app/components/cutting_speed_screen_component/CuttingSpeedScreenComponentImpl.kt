@@ -29,6 +29,18 @@ class CuttingSpeedScreenComponentImpl(
         childFactory = ::createChildDialog,
     )
 
+    override fun showCalcResultDialog() {
+        with(viewModel.uiModel.value) {
+            val diam = diameterField.value.toFloatOrNull()
+            if (diam != null) {
+                val calcResult = selectedCuttingCalcType.value.calculateResult(diam)
+                slotNavigation.navigate {
+                    DialogConfig.CuttingCalcResultDialogConfig(calcResult)
+                }
+            }
+        }
+    }
+
 
     @Stable
     private fun createChildDialog(
@@ -38,6 +50,7 @@ class CuttingSpeedScreenComponentImpl(
         is DialogConfig.CuttingCalcResultDialogConfig -> ICuttingSpeedScreenComponent.DialogChild.CalculateResult(
             CuttingTypeCalcResultComponentImpl(
                 componentContext = childComponentContext,
+                resultStringValue = config.calcResultString,
                 onDismiss = { slotNavigation.navigate { null } })
         )
     }
@@ -46,7 +59,7 @@ class CuttingSpeedScreenComponentImpl(
     @Serializable
     private sealed class DialogConfig {
         @Serializable
-        data object CuttingCalcResultDialogConfig : DialogConfig()
+        data class CuttingCalcResultDialogConfig(val calcResultString: String) : DialogConfig()
 
     }
 }

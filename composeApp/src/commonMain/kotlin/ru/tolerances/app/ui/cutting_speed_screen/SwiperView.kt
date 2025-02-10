@@ -34,7 +34,7 @@ fun SwiperView(
 ) {
 
     val toggleState = remember(selectedCuttingType.value) {
-        derivedStateOf { selectedCuttingType.value == CuttingCalcType.CalcV }
+        derivedStateOf { selectedCuttingType.value is CuttingCalcType.CalcV }
     }
 
     Row(
@@ -52,7 +52,7 @@ fun SwiperView(
                     .clickable(interactionSource = null, indication = null) {
                         onToggleCuttingType(false)
                     }.padding(vertical = 10.dp),
-                text = CuttingCalcType.CalcN.getTypeTitle(),
+                text = "Количество оборотов",
                 maxLines = 1,
                 textAlign = TextAlign.Center
             )
@@ -95,7 +95,7 @@ fun SwiperView(
                     .clickable(interactionSource = null, indication = null) {
                         onToggleCuttingType(true)
                     }.padding(vertical = 10.dp),
-                text = CuttingCalcType.CalcV.getTypeTitle(),
+                text = "Скорость резания",
                 maxLines = 1,
                 textAlign = TextAlign.Center
             )
