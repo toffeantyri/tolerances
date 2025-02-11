@@ -20,6 +20,7 @@ import ru.tolerances.app.components.cutting_speed_screen_component.ICuttingSpeed
 import ru.tolerances.app.ui.generals.InputTextField
 import ru.tolerances.app.ui.generals.MyFilledButton
 import ru.tolerances.app.ui.generals.TitleText
+import ru.tolerances.app.ui.theme.medium14TextStyle
 import ru.tolerances.app.ui.theme.medium16TextStyle
 
 @Composable
@@ -66,6 +67,15 @@ fun CuttingSpeedScreenView(component: ICuttingSpeedScreenComponent) {
                 }
 
                 item {
+
+                    TitleText(
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                            .padding(horizontal = 16.dp),
+                        text = "Что хотим рассчитать?",
+                        textAlign = TextAlign.Center,
+                        textStyle = medium14TextStyle()
+                    )
+
                     SwiperView(
                         selectedCuttingType = uiModel.value.selectedCuttingCalcType,
                         onToggleCuttingType = component.viewModel::onToggleCuttingCalcType

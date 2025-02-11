@@ -69,9 +69,12 @@ class CuttingSpeedViewModel : InstanceKeeper.Instance {
         val inputFieldErrorN: MutableState<String?> = mutableStateOf(null)
     )
 
-    fun MutableState<String?>.validateAsFloat(value: String, onSuccess: (Float) -> Unit) {
+    private fun MutableState<String?>.validateAsFloat(value: String, onSuccess: (Float) -> Unit) {
         value.toFloatOrNull()?.let {
             this.value = null
+            if (it <= 0) {
+                this.value = "Значение должно быть больше 0"
+            }
             onSuccess(it)
         } ?: run {
             this.value = "Введите число"
