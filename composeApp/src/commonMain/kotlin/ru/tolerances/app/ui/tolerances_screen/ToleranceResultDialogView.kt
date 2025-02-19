@@ -29,9 +29,14 @@ fun ToleranceResultDialogView(component: ITolerancesResultDialogComponent) {
                 modifier = Modifier.wrapContentSize().padding(32.dp),
                 contentAlignment = Alignment.Center
             ) {
+                val result = component.resultValue.value
                 Column {
-                    Text(component.resultValue.value.maxToler.toString())
-                    Text(component.resultValue.value.minToler.toString())
+                    if (result.maxToler == null || result.minToler == null) {
+                        Text("-")
+                    } else {
+                        Text(result.maxToler.toInt().toString())
+                        Text(result.minToler.toInt().toString())
+                    }
                 }
             }
         }
