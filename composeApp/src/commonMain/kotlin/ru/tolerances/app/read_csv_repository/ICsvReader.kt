@@ -10,8 +10,10 @@ interface ICsvReader {
 
     val tolerancesGOSTList: StateFlow<List<String>>
 
-    val tolerancesTable: StateFlow<List<List<String>>>
+    val tolerancesTable: StateFlow<List<List<UnitData>>>
 
     suspend fun init()
+
+    data class UnitData(val minToler: Float?, val maxToler: Float?)
 
 }

@@ -1,6 +1,7 @@
 package ru.tolerances.app.ui.tolerances_screen
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -28,7 +29,10 @@ fun ToleranceResultDialogView(component: ITolerancesResultDialogComponent) {
                 modifier = Modifier.wrapContentSize().padding(32.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(component.resultValue.value)
+                Column {
+                    Text(component.resultValue.value.maxToler.toString())
+                    Text(component.resultValue.value.minToler.toString())
+                }
             }
         }
     }
