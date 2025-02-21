@@ -1,6 +1,7 @@
 package ru.tolerances.app.ui.generals
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -58,37 +59,40 @@ fun InputTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     textStyle: TextStyle = MaterialTheme.typography.displayMedium
 ) {
-    OutlinedTextField(
-        placeholder = placeholder,
-        value = valueState.value,
-        onValueChange = onValueChange,
-        keyboardOptions = keyboardOptions,
-        singleLine = true,
-        maxLines = 1,
-        label = label,
-        leadingIcon = leadingIcon,
-        colors = colors,
-        shape = RoundedCornerShape(8.dp),
-        modifier = modifier,
-        enabled = enabled,
-        readOnly = readOnly,
-        isError = error.isNullOrEmpty().not(),
-        trailingIcon = trailingIcon,
-        visualTransformation = visualTransformation,
-        textStyle = textStyle
 
-    )
+    Column(modifier = modifier) {
+        OutlinedTextField(
+            placeholder = placeholder,
+            value = valueState.value,
+            onValueChange = onValueChange,
+            keyboardOptions = keyboardOptions,
+            singleLine = true,
+            maxLines = 1,
+            label = label,
+            leadingIcon = leadingIcon,
+            colors = colors,
+            shape = RoundedCornerShape(8.dp),
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            readOnly = readOnly,
+            isError = error.isNullOrEmpty().not(),
+            trailingIcon = trailingIcon,
+            visualTransformation = visualTransformation,
+            textStyle = textStyle
 
-    AnimatedVisibility(visible = (error?.isNotEmpty() ?: false) && showBottomErrorMessage) {
-        Text(
-            text = error ?: stringResource(Res.string.unknown_error),
-            maxLines = 2,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp, start = 32.dp, end = 32.dp),
-            style = MaterialTheme.typography.displaySmall,
-            color = RedAttention
         )
+
+        AnimatedVisibility(visible = (error?.isNotEmpty() ?: false) && showBottomErrorMessage) {
+            Text(
+                text = error ?: stringResource(Res.string.unknown_error),
+                maxLines = 2,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp, start = 32.dp, end = 32.dp),
+                style = MaterialTheme.typography.displaySmall,
+                color = RedAttention
+            )
+        }
     }
 }
 

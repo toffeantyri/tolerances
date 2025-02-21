@@ -1,7 +1,6 @@
-package ru.tolerances.app.ui.tolerances_screen
+package ru.tolerances.app.ui.cutting_speed_screen
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -14,10 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import ru.tolerances.app.components.tolerances_screen_component.dialogs.ITolerancesResultDialogComponent
+import ru.tolerances.app.components.cutting_speed_screen_component.dialog.ICuttingTypeCalcResultComponent
 
 @Composable
-fun ToleranceResultDialogView(component: ITolerancesResultDialogComponent) {
+fun CuttingResultDialogView(component: ICuttingTypeCalcResultComponent) {
 
     Dialog(onDismissRequest = component::onDismissAction) {
         Card(
@@ -29,15 +28,7 @@ fun ToleranceResultDialogView(component: ITolerancesResultDialogComponent) {
                 modifier = Modifier.wrapContentSize().padding(32.dp),
                 contentAlignment = Alignment.Center
             ) {
-                val result = component.resultValue.value
-                Column {
-                    if (result.maxToler == null || result.minToler == null) {
-                        Text("-")
-                    } else {
-                        Text(result.maxToler.toInt().toString())
-                        Text(result.minToler.toInt().toString())
-                    }
-                }
+                Text(component.resultValue.value)
             }
         }
     }

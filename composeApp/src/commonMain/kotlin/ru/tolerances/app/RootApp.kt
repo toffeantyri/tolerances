@@ -7,13 +7,28 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.List
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.StackAnimation
@@ -25,6 +40,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimator
 import com.arkivanov.essenty.backhandler.BackHandler
 import ru.tolerances.app.components.IRootComponent
+import ru.tolerances.app.ui.cutting_speed_screen.CuttingSpeedScreenView
 import ru.tolerances.app.ui.generals.TitleText
 import ru.tolerances.app.ui.theme.AppTheme
 import ru.tolerances.app.ui.theme.LiquidBlue
@@ -34,6 +50,20 @@ import ru.tolerances.app.ui.tolerances_screen.TolerancesScreenView
 @Composable
 fun RootApp(modifier: Modifier = Modifier, component: IRootComponent) {
 
+    val selectedBottomTabState = component.selectedBottomTab.collectAsState()
+
+    val bottomItemsList = listOf(
+        BottomItemData(
+            Icons.AutoMirrored.Outlined.List,
+            "Допуски",
+            component::onTolerancesScreen
+        ),
+        BottomItemData(
+            Icons.Filled.Search,
+            "Калькулятор",
+            component::onCuttingSpeedScreen
+        )
+    )
     AppTheme {
 
         Scaffold(
@@ -46,6 +76,12 @@ fun RootApp(modifier: Modifier = Modifier, component: IRootComponent) {
                         textAlign = TextAlign.Center
                     )
                 }
+            },
+            bottomBar = {
+                MainBottomNavigation(
+                    bottomTabs = bottomItemsList,
+                    selectedIndexState = selectedBottomTabState
+                )
             }
         ) { innerPadding ->
             Children(
@@ -61,6 +97,7 @@ fun RootApp(modifier: Modifier = Modifier, component: IRootComponent) {
             ) {
                 when (val item = it.instance) {
                     is IRootComponent.Child.OnTolerancesScreenChild -> TolerancesScreenView(item.component)
+                    is IRootComponent.Child.OnCuttingSpeedScreenChild -> CuttingSpeedScreenView(item.component)
                 }
             }
 
@@ -113,4 +150,35 @@ private fun Modifier.offsetXFactor(factor: Float): Modifier =
             placeable.placeRelative(x = (placeable.width.toFloat() * factor).toInt(), y = 0)
         }
     }
+
+
+data class BottomItemData(
+    val icon: ImageVector,
+    val localizedName: String,
+    val onNavigate: () -> Unit
+)
+
+@Composable
+private fun MainBottomNavigation(
+    bottomTabs: List<BottomItemData>,
+    selectedIndexState: State<Int>,
+) {
+
+    Surface(elevation = 5.dp) {
+        NavigationBar(
+            containerColor = MaterialTheme.colorScheme.surface
+        ) {
+            bottomTabs.forEachIndexed { index, item ->
+                NavigationBarItem(
+                    icon = { Icon(item.icon, null, modifier = Modifier.alpha(0.5f)) },
+                    label = { Text(item.localizedName) },
+                    selected = index == selectedIndexState.value,
+                    colors = NavigationBarItemDefaults.colors(indicatorColor = LiquidBlue),
+                    onClick = item.onNavigate
+                )
+            }
+        }
+    }
+
+}
 
