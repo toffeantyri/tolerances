@@ -21,7 +21,7 @@ internal fun bold18TitleTextStyle() = TextStyle(
 @Composable
 internal fun bold16TextStyle() = TextStyle(
     fontSize = 16.sp,
-    fontWeight = FontWeight.Normal,
+    fontWeight = FontWeight.Bold,
     lineHeight = 18.2.sp,
     letterSpacing = 0.42.sp
 )
@@ -30,7 +30,7 @@ internal fun bold16TextStyle() = TextStyle(
 @Composable
 internal fun bold14TextStyle() = TextStyle(
     fontSize = 14.sp,
-    fontWeight = FontWeight.Normal,
+    fontWeight = FontWeight.Bold,
     lineHeight = 18.2.sp,
     letterSpacing = 0.42.sp
 )

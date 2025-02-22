@@ -7,6 +7,8 @@ interface ITolerancesResultDialogComponent {
 
     val resultValue: Value<ICsvReader.UnitData>
 
+    val inputedSize: Value<Float>
+
     fun onDismissAction()
 
 }
