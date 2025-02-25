@@ -11,9 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import ru.tolerances.app.components.cutting_speed_screen_component.dialog.ICuttingTypeCalcResultComponent
+import kotlin.math.pow
+import kotlin.math.roundToInt
 
 @Composable
 fun CuttingResultDialogView(component: ICuttingTypeCalcResultComponent) {
@@ -28,7 +33,16 @@ fun CuttingResultDialogView(component: ICuttingTypeCalcResultComponent) {
                 modifier = Modifier.wrapContentSize().padding(32.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(component.resultValue.value)
+                val result = component.resultValue.value.toFloat()
+                val factor = 10.0.pow(2.toDouble()).toFloat()
+                Text(
+                    ((result * factor).roundToInt() / factor).toString(), style = TextStyle(
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = 18.2.sp,
+                        letterSpacing = 0.42.sp
+                    )
+                )
             }
         }
     }

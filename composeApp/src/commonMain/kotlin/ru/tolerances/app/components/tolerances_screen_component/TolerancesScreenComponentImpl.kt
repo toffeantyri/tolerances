@@ -50,6 +50,8 @@ class TolerancesScreenComponentImpl(componentContext: ComponentContext) :
                 TolerancesResultDialogComponentImpl(
                     childComponentContext,
                     result = viewModel.csvReader.tolerancesTable.value[config.rangeIndex][config.toleranceIndex],
+                    userInputedSize = viewModel.uiModel.value.userValueField.value.toFloatOrNull()
+                        ?: 0f,
                     onDismiss = { slotNavigation.navigate { null } })
             )
         }

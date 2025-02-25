@@ -79,13 +79,13 @@ class CsvReaderImpl : ICsvReader {
         }.constructMinMaxList()
 
         //println("rwStr $rawStrings")
-        val rawPair = Pair(rawStrings[0].toInt(), rawStrings[1].toInt())
+        val rawPair = Pair(rawStrings[0].toFloat() / 1000, rawStrings[1].toFloat() / 1000)
         //println("rawPair $rawPair")
 
-        val maxToler: Int = max(rawPair.first, rawPair.second)
-        val minToler: Int = kotlin.math.min(rawPair.first, rawPair.second)
+        val maxToler: Float = max(rawPair.first, rawPair.second)
+        val minToler: Float = kotlin.math.min(rawPair.first, rawPair.second)
 
-        return ICsvReader.UnitData(minToler.toFloat(), maxToler.toFloat())
+        return ICsvReader.UnitData(minToler, maxToler)
     }
 
     private fun List<String>.constructMinMaxList(): List<String> {
@@ -102,11 +102,9 @@ class CsvReaderImpl : ICsvReader {
             }
 
             if (s == "±") {
-                // if (result.firstOrNull() != "0") {
                 result.add("-" + this[index + 1])
                 result.add(this[index + 1])
                 break
-                //  }
             } else if (!added) {
                 result.add(s)
             } else {
