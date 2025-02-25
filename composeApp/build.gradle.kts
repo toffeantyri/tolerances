@@ -94,6 +94,7 @@ kotlin {
             implementation(libs.koin.android)
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.core.splashscreen)
         }
 
 
@@ -120,8 +121,8 @@ android {
         applicationId = "ru.tolerances.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
     }
     packaging {
         resources {

@@ -67,6 +67,9 @@ fun RootApp(modifier: Modifier = Modifier, component: IRootComponent) {
     AppTheme {
 
         Scaffold(
+            modifier = Modifier
+                .statusBarsPadding()
+                .navigationBarsPadding(),
             topBar = {
                 TopAppBar(modifier = Modifier.fillMaxWidth(), backgroundColor = LiquidBlue) {
                     TitleText(
@@ -87,9 +90,7 @@ fun RootApp(modifier: Modifier = Modifier, component: IRootComponent) {
             Children(
                 stack = component.childStackBottom,
                 modifier = modifier
-                    .padding(innerPadding)
-                    .statusBarsPadding()
-                    .navigationBarsPadding(),
+                    .padding(innerPadding),
                 animation = backAnimation(
                     backHandler = component.backHandler,
                     onBack = component::onExitClicked
