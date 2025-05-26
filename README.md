@@ -1,6 +1,7 @@
 Приложение карманный инструмент-справочник машиностроителя.
 
-https://toffeantyri.github.io/tolerances?
+https://toffeantyri.github.io/tolerances
+(Если не грузит - добавь ? в конце адреса)
 
 KMP, MVVM, Compose Multiplatform, Decompose
 
