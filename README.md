@@ -8,6 +8,9 @@
 Карманный справочник машиностроения.
 
 https://toffeantyri.github.io/tolerances
+
+[![rustore](https://img.shields.io/badge/application-blue-rustore_link-red)](https://www.rustore.ru/catalog/app/ru.tolerances.app)
+
 (Если не грузит - добавь ? в конце адреса)
 или
 https://www.rustore.ru/catalog/app/ru.tolerances.app
