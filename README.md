@@ -8,13 +8,11 @@
 Карманный справочник машиностроения.
 
 web version: 
-[![web-version](https://img.shields.io/badge/web-link-blue)](https://toffeantyri.github.io/tolerance?)
+[![web-version](https://img.shields.io/badge/web-link-blue)](https://toffeantyri.github.io/tolerances)
 
 
 Ссылка в RuStore:
 [![rustore](https://img.shields.io/badge/rustore-link-blue)](https://www.rustore.ru/catalog/app/ru.tolerances.app)
-
-(Если не грузит - добавь ? в конце адреса)
 
 
 KMP, MVVM, Compose Multiplatform, Decompose
