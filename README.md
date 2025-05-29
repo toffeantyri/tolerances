@@ -9,7 +9,7 @@
 
 https://toffeantyri.github.io/tolerances
 
-[![rustore](https://img.shields.io/badge/application-blue-rustore_link-red)](https://www.rustore.ru/catalog/app/ru.tolerances.app)
+[![rustore](https://img.shields.io/badge/application-rustore_link-red)](https://www.rustore.ru/catalog/app/ru.tolerances.app)
 
 (Если не грузит - добавь ? в конце адреса)
 или
