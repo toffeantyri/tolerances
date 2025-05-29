@@ -8,7 +8,7 @@
 Карманный справочник машиностроения.
 
 web version: 
-[![web-version](https://img.shields.io/badge/web-link-blue)](https://toffeantyri.github.io/tolerances)
+[![web-version](https://img.shields.io/badge/web-link-blue)](https://toffeantyri.github.io/tolerance?)
 
 
 Ссылка в RuStore:
