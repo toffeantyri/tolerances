@@ -7,7 +7,8 @@
 Таблица объединяет старые (советские) и новые допуски и посадки по системе вал, отверстие согласно таблице ЕСДП.
 Карманный справочник машиностроения.
 
-https://toffeantyri.github.io/tolerances
+web version: 
+[![web-version](https://img.shields.io/badge/web-link-blue)](https://toffeantyri.github.io/tolerances)
 
 
 Ссылка в RuStore:
