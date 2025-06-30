@@ -152,6 +152,11 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "ru.tolerances.app"
             packageVersion = "1.0.0"
+
+            version = "1.0.0"
+            description = "Turning calculator, with tolerance table"
+            copyright = "©2025 Shepetyuk Anton"
+            vendor = "Shepetyuk Anton"
         }
     }
 }
