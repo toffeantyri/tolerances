@@ -20,5 +20,6 @@ KMP, MVVM, Compose Multiplatform, Decompose
 Парсит таблицу .csv, (Таблица допусков и посадок), преобразуем в структуру удобную для поиска, отображения, фильтрации. 
 Вводим данные в диалоге отображается результат. 
 
+composeApp:runDistributable - create and run bin composeApp/build/compose/binaries/main/app
 
 

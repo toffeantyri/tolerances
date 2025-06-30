@@ -91,7 +91,7 @@ class CsvReaderImpl : ICsvReader {
     private fun List<String>.constructMinMaxList(): List<String> {
         val result = mutableListOf<String>()
         var added: Boolean = false
-        println("rawStr $this")
+//        println("rawStr $this")
         for (index in this.indices) {
             val s = this[index]
 
@@ -113,7 +113,7 @@ class CsvReaderImpl : ICsvReader {
 
 
         }
-        println("minMaxList $result")
+//        println("minMaxList $result")
         if (result.size != 2) throw IllegalArgumentException("raw $this result $result  not equals 2")
         return result
     }
