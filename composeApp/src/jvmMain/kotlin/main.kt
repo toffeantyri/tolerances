@@ -1,5 +1,7 @@
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.arkivanov.essenty.statekeeper.StateKeeperDispatcher
@@ -26,7 +28,10 @@ fun main() {
     }
 
     application {
+        val windowState = rememberWindowState(width = 500.dp, height = 700.dp)
+
         Window(
+            state = windowState,
             onCloseRequest = ::exitApplication,
             title = "TolerancesTableData",
         ) {

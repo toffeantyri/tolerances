@@ -18,11 +18,13 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -37,6 +39,7 @@ import ru.tolerances.app.ui.theme.OceanBlue
 import ru.tolerances.app.ui.theme.medium14TextStyle
 import ru.tolerances.app.ui.theme.medium16TextStyle
 import ru.tolerances.app.ui.theme.regular12TextStyle
+import ru.tolerances.app.utils.onKeyEnter
 import ru.tolerances.app.utils.toIntRange
 
 @Composable
@@ -49,7 +52,7 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
 
     val uiModel = component.viewModel.uiModel.subscribeAsState()
 
-    val buttonEnabled = remember() {
+    val buttonEnabled = remember {
         derivedStateOf {
             (uiModel.value.searchRangeResultIndex.value != null) && (uiModel.value.searchToleranceResultIndex.size == 1)
         }
@@ -72,10 +75,41 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
             )
         }
     }
-    Surface {
+
+
+//    LaunchedEffect(buttonEnabled.value) {
+//        if (buttonEnabled.value) {
+//            with(uiModel.value) {
+//                searchRangeResultIndex.value?.let { rangeIndex ->
+//                    searchToleranceResultIndex.firstOrNull()?.let { toleranceIndex ->
+//                        component.showDialogToleranceResult(rangeIndex, toleranceIndex)
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+    val focusRequester = remember { FocusRequester() }
+
+    Surface() {
         Box(modifier = Modifier.fillMaxSize()) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize()
+                    .onKeyEnter(focusRequester) {
+                        if (buttonEnabled.value) {
+                            with(uiModel.value) {
+                                searchRangeResultIndex.value?.let { rangeIndex ->
+                                    searchToleranceResultIndex.firstOrNull()
+                                        ?.let { toleranceIndex ->
+                                            component.showDialogToleranceResult(
+                                                rangeIndex,
+                                                toleranceIndex
+                                            )
+                                        }
+                                }
+                            }
+                        }
+                    },
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
@@ -266,4 +300,9 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
             )
         }
     }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+
 }
