@@ -27,7 +27,7 @@ class TolerancesViewModel(
     }
 
     fun onToleranceInputValue(value: String) {
-        if (value.length > 4) return
+        if (value.length > 5) return
         fun clearSearchResult() = run { uiModel.value.searchToleranceResultIndex.clear() }
         viewModelScope.launch {
             clearSearchResult()
@@ -61,13 +61,14 @@ class TolerancesViewModel(
     }
 
 
-    fun onUserInputValue(value: String) {
-        if (value.length > 5) return
+    fun onUserInputMeasValue(value: String) {
+        val valueString = value.trim().replace(',', '.')
+        if (valueString.length > 8) return
         fun clearSearchResult() = run { uiModel.value.searchRangeResultIndex.value = null }
         viewModelScope.launch {
             clearSearchResult()
-            uiModel.value.userValueField.value = value
-            value.toDoubleOrNull()?.let { num ->
+            uiModel.value.userValueField.value = valueString
+            valueString.toDoubleOrNull()?.let { num ->
                 csvReader.intRanges.value.firstIndexOrNull { num in it }?.let { rangeIndex ->
                     uiModel.value.searchRangeResultIndex.value = rangeIndex
                 } ?: clearSearchResult()

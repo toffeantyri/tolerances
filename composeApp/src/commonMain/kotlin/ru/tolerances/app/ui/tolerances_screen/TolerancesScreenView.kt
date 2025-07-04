@@ -135,7 +135,7 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
                             InputTextField(
                                 modifier = Modifier.fillMaxWidth().padding(end = 8.dp),
                                 valueState = uiModel.value.userValueField,
-                                onValueChange = { component.viewModel.onUserInputValue(it) },
+                                onValueChange = { component.viewModel.onUserInputMeasValue(it) },
                                 keyboardOptions = KeyboardOptions(
                                     keyboardType = KeyboardType.Number,
                                     imeAction = ImeAction.Next
@@ -175,7 +175,7 @@ fun TolerancesScreenView(component: ITolerancesScreenComponent) {
                             InputTextField(
                                 modifier = Modifier.fillMaxWidth().padding(start = 8.dp),
                                 valueState = uiModel.value.tolerancesField,
-                                onValueChange = { component.viewModel.onToleranceInputValue(it) },
+                                onValueChange = { component.viewModel.onToleranceInputValue(it.trim()) },
                                 keyboardOptions = KeyboardOptions(
                                     keyboardType = KeyboardType.Text,
                                     imeAction = ImeAction.None
