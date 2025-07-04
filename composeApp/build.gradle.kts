@@ -11,6 +11,8 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
 }
 
+val genVersion = "1.0.1"
+
 kotlin {
     androidTarget {
         compilerOptions {
@@ -122,7 +124,7 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 2
-        versionName = "1.1"
+        versionName = genVersion
     }
     packaging {
         resources {
@@ -150,13 +152,16 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "ru.tolerances.app"
-            packageVersion = "1.0.0"
 
-            version = "1.0.0"
+            packageName = "Tolerances etc"
+            packageVersion = genVersion
+            version = genVersion
             description = "Turning calculator, with tolerance table"
             copyright = "©2025 Shepetyuk Anton"
             vendor = "Shepetyuk Anton"
+
+            windows.iconFile.set(project.file("src/commonMain/composeResources/drawable/ic_launcher.ico"))
+
         }
     }
 }
